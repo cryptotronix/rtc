@@ -19,6 +19,7 @@
  */
 
 #include "i2c.h"
+#include "log.h"
 #include <assert.h>
 #include <errno.h>
 #include <string.h>
@@ -64,6 +65,7 @@ ssize_t i2c_write(int fd, uint8_t *buf, unsigned int len)
 {
   assert(NULL != buf);
 
+  print_hex_string ("Writing", buf, len);
   return write(fd, buf, len);
 }
 
@@ -71,5 +73,6 @@ ssize_t i2c_read(int fd, uint8_t *buf, unsigned int len)
 {
   assert(NULL != buf);
 
+  print_hex_string ("Reading", buf, len);
   return read(fd, buf, len);
 }
