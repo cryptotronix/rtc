@@ -23,10 +23,8 @@
 #include <assert.h>
 #include "config.h"
 #include <string.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include "rtc_parser.h"
-#include <time.h>
 #include "rtc.h"
 
 void sprintfb (char *s, uint8_t b)
@@ -65,14 +63,6 @@ struct time_serialized serialize_time (struct tm t)
 {
   struct time_serialized ts = {};
   uint8_t *p = ts.time;
-
-  printf ("%s : %u\n", "seconds", t.tm_sec);
-  printf ("%s : %u\n", "minutes", t.tm_min);
-  printf ("%s : %u\n", "hours", t.tm_hour);
-  printf ("%s : %u\n", "wday", t.tm_wday);
-  printf ("%s : %u\n", "mday", t.tm_mday);
-  printf ("%s : %u\n", "mon", t.tm_mon);
-  printf ("%s : %u\n", "year", t.tm_year);
 
   *p++ = digit2bits (t.tm_sec, false);
   *p++ = digit2bits (t.tm_min, false);
@@ -162,82 +152,29 @@ uint8_t digit2bits (unsigned int d, bool hour)
 
 }
 
-
-
-
-int main (int argc, char **argv)
+struct tm get_time (int fd)
 {
-
-  int fd;
-
-  const uint8_t ADDR = 0x68; /* Data sheet says D0 */
-
-  fd = i2c_setup("/dev/i2c-1");
-
-  assert (fd > 0);
-
-  i2c_acquire_bus (fd, ADDR);
-
   struct time_serialized* t = get_time_from_device (fd);
+  struct tm c_time = {0};
 
-  assert (NULL != t);
+  if (NULL == t)
+    return c_time;
 
-  int x = 0;
-  for (x=0;x<sizeof (t->time);x++)
-    {
-      printf ("%02x ", t->time[x]);
+  const unsigned int BIT_TIME_LEN = 56;
 
-    }
-
-  printf ("\n");
-
-  char *s = malloc (100);
-  memset (s, 0, 100);
+  /* Convert the time in an ASCII bit string */
+  char *s = malloc (BIT_TIME_LEN);
+  assert (NULL != s);
+  memset (s, 0, BIT_TIME_LEN);
   hex2bin (s, t->time, sizeof (t->time));
 
-  printf ("%s\n", s);
-
+  /* Parse the string */
   if (0 == scan_string (s))
     {
-      printf ("YES!\n");
-      struct tm t = get_rtc_time ();
-      printf ( "%s", asctime (&t));
+      c_time = get_rtc_time ();
     }
 
-  time_t current_time = time (NULL);
-  struct tm * ct_p = gmtime (&current_time);
-  printf ("Current time %s", asctime (ct_p));
-  assert (NULL != ct_p);
-
-  assert (true == set_time (fd, *ct_p));
-  /* struct time_serialized ts = serialize_time (*ct_p); */
-
-  /* for (x=0;x<sizeof (ts.time);x++) */
-  /*   { */
-  /*     printf ("%02x ", ts.time[x]); */
-
-  /*   } */
-
-  /* printf ("\n"); */
-
-  /* s = (char *)realloc (s, 100); */
-  /* memset (s, 0, 100); */
-
-  /* hex2bin (s, ts.time, sizeof (ts.time)); */
-
-  /* printf ("%s\n", s); */
-
-
-  /* if (0 == scan_string (s)) */
-  /*   { */
-  /*     printf ("YES!\n"); */
-  /*     struct tm t = get_rtc_time (); */
-  /*     printf ( "%s", asctime (&t)); */
-  /*   } */
-
-  close (fd);
   free (t);
-
-  return 0;
+  return c_time;
 
 }

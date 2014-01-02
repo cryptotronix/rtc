@@ -1,5 +1,5 @@
 /* -*- mode: c; c-file-style: "gnu" -*-
- * Copyright (C) 2013 Cryptotronix, LLC.
+ * Copyright (C) 2014 Cryptotronix, LLC.
  *
  * This file is part of rtc.
  *
@@ -20,6 +20,10 @@
 
 #ifndef RTC_H
 #define RTC_H
+
+#include <stdint.h>
+#include <time.h>
+#include <stdbool.h>
 
 struct time_serialized
 {
@@ -45,6 +49,14 @@ struct time_serialized serialize_time (struct tm t);
  */
 struct time_serialized* get_time_from_device (int fd);
 
+/**
+ * Get the time from the device and convert it
+ *
+ * @param fd The open file descriptor
+ *
+ * @return The device's time.
+ */
+struct tm get_time (int fd);
 
 /**
  * Utility function to convert a byte into a ASCII binary string
