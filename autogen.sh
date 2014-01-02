@@ -16,9 +16,24 @@
 # You should have received a copy of the GNU General Public License
 # along with Hashlet.  If not, see <http://www.gnu.org/licenses/>.
 
+test_exit(){
+    if [[ $? == 0 ]]; then
+        echo $1 passed
+    else
+        echo $1 failed
+        exit $?
+    fi
+}
+
 if [ ! -d "m4" ]; then
     mkdir m4
 fi
+
 autoreconf --force --install
+test_exit autoreconf
+
 ./configure
+test_exit configure
+
 make
+test_exit make
