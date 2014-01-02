@@ -1,33 +1,31 @@
 /* -*- mode: c; c-file-style: "gnu" -*-
- * Copyright (C) 2013 Cryptotronix, LLC.
+ * Copyright (C) 2014 Cryptotronix, LLC.
  *
- * This file is part of Hashlet.
+ * This file is part of rtc.
  *
- * Hashlet is free software: you can redistribute it and/or modify
+ * rtc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * Hashlet is distributed in the hope that it will be useful,
+ * rtc is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Hashlet.  If not, see <http://www.gnu.org/licenses/>.
+ * along with rtc.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 %{
 #include <stdio.h>
 #include "rtc_parser.h"
 #include <stdbool.h>
+#include <string.h>
 
 
 void yyerror (const char *error);
 int yylex(void);
-
-#define PRINT(x) printf ("%s\n", x);
-
 
 %}
 
@@ -60,7 +58,7 @@ int yylex(void);
 %%
 
 
-encoded_time : ds3231m_time { PRINT ("encoded_time -> ds321m_time")}
+encoded_time : ds3231m_time { }
 
 ds3231m_time : BIT seconds_10 seconds BIT minutes_10 minutes BIT twelve_24 am_pm hours_10 hour BIT BIT BIT BIT BIT day BIT BIT date_10 date century BIT BIT month_10 month year_10 year
 { set_rtc_time ($2, $3, $5, $6, $8, $9, $10, $11, $17, $20, $21, $22, $25, $26, $27, $28);}
@@ -81,7 +79,6 @@ month_10   : BIT { $$ = $1 * 1; }
 month      : BIT BIT BIT BIT { $$ = $1 * 8 + $2 * 4 + $3 * 2 + $4 * 1; }
 year_10    : BIT BIT BIT BIT { $$ = $1 * 8 + $2 * 4 + $3 * 2 + $4 * 1; }
 year       : BIT BIT BIT BIT { $$ = $1 * 8 + $2 * 4 + $3 * 2 + $4 * 1; }
-
 
 %%
 
