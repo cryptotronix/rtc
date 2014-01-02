@@ -1,4 +1,4 @@
-# Copyright (C) 2013 Cryptotronix, LLC.
+# Copyright (C) 2014 Cryptotronix, LLC.
 
 # This file is part of rtc.
 
@@ -28,7 +28,9 @@ AM_YFLAGS = -d
 bin_PROGRAMS = rtc
 rtc_SOURCES = src/i2c.h src/i2c.c src/rtc.h src/rtc.c \
 	      src/rtc_pasrer.h src/rtc_parser.c \
-	      src/rtc_flex.l src/rtc_bison.y
+	      src/rtc_flex.l src/rtc_bison.y \
+	      src/log.h src/log.c \
+	      src/main.c
 
 BUILT_SOURCES = src/rtc_bison.h
 
