@@ -32,8 +32,29 @@ enum LOG_LEVEL
     DEBUG
   };
 
+/**
+ * Sets the global log level
+ *
+ * @param lvl The new level to set
+ */
 void set_log_level(enum LOG_LEVEL lvl);
 
+/**
+ * Writes a log message.
+ *
+ * @param LOG_LEVEL The log level of the message
+ * @param format The format string to print
+ */
 void CTX_LOG(enum LOG_LEVEL, const char *format, ...);
+
+/**
+ * Prints out the hex string in a consistent format.
+ *
+ * @param str The prefix of the mesage
+ * @param hex The hex buffer to print
+ * @param len The length of the buffer
+ */
+void print_hex_string(const char *str, const uint8_t *hex, unsigned int len);
+
 
 #endif /* LOG_H */
