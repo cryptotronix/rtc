@@ -1,0 +1,61 @@
+2014-02-16  Josh Datko  <jbdatko@gmail.com>
+
+	Fixes typo and adds test target.
+
+	Adds basic test for the rtc.
+
+	Adds initial NEWS file.
+
+	Updates documentation.  Adds bus option.
+
+	Fixes license.
+
+	Fixes time conversion when setting time.  Fixes issue #1.
+
+	Sets the log level with the verbose flag.
+
+	Adds function prototypes.
+
+	Fixes print out for reads and write.
+
+2014-01-02  Josh Datko  <jbdatko@gmail.com>
+
+	Adds travis ci.
+
+	Adds test function to ensure each part passes.
+
+	Adds basic readme.
+
+	Adds author.
+
+	Removes printfs and adds get_time.
+	get_time converts the time from the device to the c time.
+
+	Updates license.
+
+	Adds logging on send and receive.
+
+	Adds additional files.
+
+	Initial version.
+
+2013-12-31  Josh  <jbdatko@gmail.com>
+
+	Initial commit
+-------------------------------------------------------------------
+Copyright (C) 2013 Cryptotronix, LLC.
+
+This file is part of rtc.
+
+rtc is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+rtc is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with rtc.  If not, see <http://www.gnu.org/licenses/>.
