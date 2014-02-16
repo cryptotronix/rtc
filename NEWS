@@ -1,0 +1,37 @@
+rtc NEWS -- history of user-visible changes
+
+Copyright (C) 2014 Cryptotronix, LLC.
+
+* rtc 0.1.0 - Beta Release - February 2014
+
+The initial release of rtc is concerned a Beta release.
+
+** Features
+
+*** Command line interface
+
+The following commands are supported:
+
+**** date - retrieves the date from the device
+**** set-date - sets the date to the current time.
+
+--------------------------------------------------------------------
+This file is part of rtc.
+
+rtc is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+rtc is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with rtc.  If not, see <http://www.gnu.org/licenses/>.
+
+Local variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+end:
