@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include "rtc_parser.h"
 #include "rtc.h"
+#include "log.h"
 
 void sprintfb (char *s, uint8_t b)
 {
@@ -99,6 +100,11 @@ struct time_serialized* get_time_from_device (int fd)
               t = NULL;
             }
         }
+      else
+        {
+          free (t);
+          t = NULL;
+        }
     }
 
   return t;
@@ -131,7 +137,6 @@ uint8_t digit2bits (unsigned int d, bool hour)
   uint8_t result = 0;
 
   const uint8_t MASK_20 = 0b00100000;
-  const uint8_t MASK_10 = 0b00010000;
 
   if (hour && d/20 >= 1)
     {
@@ -140,7 +145,9 @@ uint8_t digit2bits (unsigned int d, bool hour)
     }
   else if (d/10 >= 1)
     {
-      result |= MASK_10;
+      unsigned int tens = d/10;
+      tens <<= 4;
+      result = tens & 0xF0;
       result += d % 10;
     }
   else
@@ -148,7 +155,7 @@ uint8_t digit2bits (unsigned int d, bool hour)
       result = d;
     }
 
-  return d;
+  return result;
 
 }
 
