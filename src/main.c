@@ -25,6 +25,7 @@
 #include <string.h>
 #include "rtc.h"
 #include "i2c.h"
+#include "log.h"
 
 const char *argp_program_version = PACKAGE_VERSION;
 
@@ -77,6 +78,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
       break;
     case 'v':
       arguments->verbose = 1;
+      set_log_level (DEBUG);
       break;
     case ARGP_KEY_ARG:
       if (state->arg_num > NUM_ARGS)
