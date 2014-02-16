@@ -27,7 +27,7 @@ AM_YFLAGS = -d
 
 bin_PROGRAMS = rtc
 rtc_SOURCES = src/i2c.h src/i2c.c src/rtc.h src/rtc.c \
-	      src/rtc_pasrer.h src/rtc_parser.c \
+	      src/rtc_parser.h src/rtc_parser.c \
 	      src/rtc_flex.l src/rtc_bison.y \
 	      src/log.h src/log.c \
 	      src/main.c
@@ -39,4 +39,5 @@ rtc_CFLAGS = -Wall
 
 dist_noinst_SCRIPTS = autogen.sh
 
-#TESTS = src/tests/test_cli.sh
+TESTS = src/tests/test_cli.sh
+EXTRA_DIST = src/tests/test_cli.sh
