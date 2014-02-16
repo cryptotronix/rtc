@@ -64,15 +64,24 @@ void i2c_acquire_bus(int fd, int addr)
 ssize_t i2c_write(int fd, uint8_t *buf, unsigned int len)
 {
   assert(NULL != buf);
+  ssize_t bytes = 0;
+
+
+  bytes = write(fd, buf, len);
 
   print_hex_string ("Writing", buf, len);
-  return write(fd, buf, len);
+
+  return bytes;
 }
 
 ssize_t i2c_read(int fd, uint8_t *buf, unsigned int len)
 {
   assert(NULL != buf);
+  ssize_t bytes = 0;
+
+  bytes = read(fd, buf, len);
 
   print_hex_string ("Reading", buf, len);
-  return read(fd, buf, len);
+
+  return bytes;
 }
