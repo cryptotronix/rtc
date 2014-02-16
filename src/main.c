@@ -37,8 +37,7 @@ static char doc[] =
   "Time Clock (RTC)\n\n"
   "Currently implemented Commands:\n\n"
   "date          --  Retrieves the current data from the device\n"
-  "set-date      --  Sets the date on the device.  Without any options, this\n"
-  "                  will set the device to the current date\n";
+  "set-date      --  Sets the date on the device to the current system time.\n";
 
 /* A description of the arguments we accept. */
 static char args_doc[] = "command";
@@ -49,6 +48,7 @@ static struct argp_option options[] = {
   {"verbose",  'v', 0,      0,  "Produce verbose output" },
   {"quiet",    'q', 0,      0,  "Don't produce any output" },
   {"silent",   's', 0,      OPTION_ALIAS },
+  {"bus",      'b', "BUS",  0,  "I2C bus: defaults to /dev/i2c-1"},
   { 0 }
 };
 
@@ -79,6 +79,9 @@ parse_opt (int key, char *arg, struct argp_state *state)
     case 'v':
       arguments->verbose = 1;
       set_log_level (DEBUG);
+      break;
+    case 'b':
+      arguments->bus = arg;
       break;
     case ARGP_KEY_ARG:
       if (state->arg_num > NUM_ARGS)
